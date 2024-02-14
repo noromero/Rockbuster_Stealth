@@ -1,0 +1,36 @@
+/*AVG RENTAL DURATION ALL VIDEOS - single value*/
+WITH all_rentals_cte(film_id,rental_duration,rental_id) AS
+        (SELECT A.film_id,
+                A.rental_duration,
+                C.rental_id
+        FROM film A
+        INNER JOIN inventory B ON A.film_id = B.film_id
+        INNER JOIN rental C ON B.inventory_id = C.inventory_id
+        ORDER BY 1)
+SELECT AVG(rental_duration)
+FROM all_rentals_cte
+
+/*NUMBER OF TIMES EACH VIDEO RENTED*/
+SELECT A.rental_duration,
+        COUNT(DISTINCT C.rental_id) AS times_rented
+FROM film A
+INNER JOIN inventory B ON A.film_id = B.film_id
+INNER JOIN rental C ON B.inventory_id = C.inventory_id
+GROUP BY 1
+ORDER BY 2 DESC
+
+/*REVENUE BY RENTAL DURATION*/
+WITH all_rentals_cte(film_id,rental_duration,amount_paid) AS
+        (SELECT A.film_id,
+                A.rental_duration,
+                D.amount AS amount_paid
+        FROM film A
+        INNER JOIN inventory B ON A.film_id = B.film_id
+        INNER JOIN rental C ON B.inventory_id = C.inventory_id
+        INNER JOIN payment D ON C.rental_id = D.rental_id
+        GROUP BY 1,2,3
+        ORDER BY 1)
+SELECT rental_duration,
+        SUM(amount_paid) AS revenue
+FROM all_rentals_cte
+GROUP BY 1
