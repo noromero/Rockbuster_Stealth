@@ -1,0 +1,110 @@
+/*titles/MOST REVENUE*/
+SELECT A.title,
+	SUM(D.amount) AS revenue 
+FROM film A
+INNER JOIN inventory B ON A.film_id = B.film_id
+INNER JOIN rental C ON B.inventory_id = C.inventory_id
+INNER JOIN payment D ON C.rental_id = D.rental_id
+GROUP BY 1
+ORDER BY revenue DESC
+LIMIT 10;
+
+/*titles/LEAST REVENUE*/
+SELECT A.title,
+	SUM(D.amount) AS revenue 
+FROM film A
+INNER JOIN inventory B ON A.film_id = B.film_id
+INNER JOIN rental C ON B.inventory_id = C.inventory_id
+INNER JOIN payment D ON C.rental_id = D.rental_id
+GROUP BY 1
+ORDER BY revenue
+LIMIT 10;
+
+
+/*genre/MOST TO LEAST REVENUE*/
+SELECT F.name,
+	SUM(D.amount) AS revenue 
+FROM film A
+INNER JOIN inventory B ON A.film_id = B.film_id
+INNER JOIN rental C ON B.inventory_id = C.inventory_id
+INNER JOIN payment D ON C.rental_id = D.rental_id
+INNER JOIN film_category E ON A.film_id = E.film_id
+INNER JOIN category F ON E.category_id = F.category_id
+GROUP BY 1
+ORDER BY revenue DESC
+
+ 
+
+
+/*actor/MOST TO LEAST REVENUE*/
+SELECT F.first_name || ' ' || F.last_name AS actor_name,
+	SUM(D.amount) AS revenue
+FROM film A
+INNER JOIN inventory B ON A.film_id = B.film_id
+INNER JOIN rental C ON B.inventory_id = C.inventory_id
+INNER JOIN payment D ON C.rental_id = D.rental_id
+INNER JOIN film_actor E ON A.film_id = E.film_id
+INNER JOIN actor F ON E.actor_id = F.actor_id
+GROUP BY 1
+ORDER BY revenue DESC
+
+/*rental_duration/MOST TO LEAST REVENUE*/
+SELECT A.rental_duration,
+	SUM(D.amount) AS revenue 
+FROM film A
+INNER JOIN inventory B ON A.film_id = B.film_id
+INNER JOIN rental C ON B.inventory_id = C.inventory_id
+INNER JOIN payment D ON C.rental_id = D.rental_id
+GROUP BY 1
+ORDER BY revenue DESC
+ 
+/*rating/MOST TO LEAST REVENUE*/
+SELECT A.rating,
+	SUM(D.amount) AS revenue 
+FROM film A
+INNER JOIN inventory B ON A.film_id = B.film_id
+INNER JOIN rental C ON B.inventory_id = C.inventory_id
+INNER JOIN payment D ON C.rental_id = D.rental_id
+GROUP BY 1
+ORDER BY revenue DESC
+ 
+/*rental_rate/MOST TO LEAST REVENUE*/
+SELECT A.rental_rate,
+	SUM(D.amount) AS revenue 
+FROM film A
+INNER JOIN inventory B ON A.film_id = B.film_id
+INNER JOIN rental C ON B.inventory_id = C.inventory_id
+INNER JOIN payment D ON C.rental_id = D.rental_id
+GROUP BY 1
+ORDER BY revenue DESC 
+
+/*release_year/MOST TO LEAST REVENUE*/
+SELECT A.release_year,
+	SUM(D.amount) AS revenue 
+FROM film A
+INNER JOIN inventory B ON A.film_id = B.film_id
+INNER JOIN rental C ON B.inventory_id = C.inventory_id
+INNER JOIN payment D ON C.rental_id = D.rental_id
+GROUP BY 1
+ORDER BY revenue DESC 
+
+/*replacement_cost/MOST TO LEAST REVENUE*/
+SELECT A.replacement_cost,
+	SUM(D.amount) AS revenue 
+FROM film A
+INNER JOIN inventory B ON A.film_id = B.film_id
+INNER JOIN rental C ON B.inventory_id = C.inventory_id
+INNER JOIN payment D ON C.rental_id = D.rental_id
+GROUP BY 1
+ORDER BY revenue DESC 
+
+/*language/MOST TO LEAST REVENUE*/
+SELECT E.name,
+	SUM(D.amount) AS revenue 
+FROM film A
+INNER JOIN inventory B ON A.film_id = B.film_id
+INNER JOIN rental C ON B.inventory_id = C.inventory_id
+INNER JOIN payment D ON C.rental_id = D.rental_id
+INNER JOIN language E ON A.language_id = E.language_id
+GROUP BY 1
+ORDER BY revenue DESC
